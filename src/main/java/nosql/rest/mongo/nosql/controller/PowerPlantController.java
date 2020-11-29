@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,8 +41,13 @@ public class PowerPlantController {
     // GET for all power plants
     @GetMapping("/getAllPowerPlants")
     public ResponseEntity<List<PowerPlant>> getPowerPlants() {
-        List<PowerPlant> powerPlants = new ArrayList<>(powerPlantRepository.findAll());
-        return new ResponseEntity<>(powerPlants, HttpStatus.OK);
+        try {
+            List<PowerPlant> powerPlants = powerPlantRepository.findAll();
+            return new ResponseEntity<>(powerPlants, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     // GET for power plant by id

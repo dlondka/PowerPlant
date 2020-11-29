@@ -19,17 +19,17 @@ public class PowerPlant {
     private String country_long;
     private String name;
     private String gppd_idnr;
-    private double capacity_mw;
-    private double latitude;
-    private double longitude;
+    private Double capacity_mw;
+    private Double latitude;
+    private Double longitude;
     private String primary_fuel;
     private String other_fuel1;
     private String other_fuel2;
     private String other_fuel3;
-    private int commissioning_year;
+    private Integer commissioning_year;
     private String owner;
     private String source;
     private String url;
     private String geolocation_source;
-    private int year_of_capacity_data;
+    private Integer year_of_capacity_data;
 }
