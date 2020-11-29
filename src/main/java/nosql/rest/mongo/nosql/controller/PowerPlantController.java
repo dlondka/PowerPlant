@@ -17,7 +17,7 @@ public class PowerPlantController {
     private PowerPlantRepository powerPlantRepository;
 
     // POST for power plant
-    @PostMapping("/addPowerPlant")
+    @PostMapping("/powerPlants")
     public ResponseEntity<PowerPlant> addPowerPlant(@RequestBody PowerPlant powerPlant) {
         try {
             PowerPlant pp = powerPlantRepository.save(powerPlant);
@@ -28,7 +28,7 @@ public class PowerPlantController {
     }
 
     // DELETE for power plant by id
-    @DeleteMapping("/deletePowerPlant/{id}")
+    @DeleteMapping("/powerPlants/{id}")
     public ResponseEntity<PowerPlant> deletePowerPlant(@PathVariable("id") ObjectId id) {
         try {
             powerPlantRepository.deleteById(id);
@@ -39,7 +39,7 @@ public class PowerPlantController {
     }
 
     // GET for all power plants
-    @GetMapping("/getAllPowerPlants")
+    @GetMapping("/powerPlants")
     public ResponseEntity<List<PowerPlant>> getPowerPlants() {
         try {
             List<PowerPlant> powerPlants = powerPlantRepository.findAll();
@@ -51,7 +51,7 @@ public class PowerPlantController {
     }
 
     // GET for power plant by id
-    @GetMapping("/getPowerPlant/{id}")
+    @GetMapping("/powerPlants/{id}")
     public ResponseEntity<PowerPlant> getPowerPlant(@PathVariable("id") ObjectId id) {
         Optional<PowerPlant> powerPlant = powerPlantRepository.findById(id);
         if (powerPlant.isPresent()) {
@@ -61,7 +61,7 @@ public class PowerPlantController {
     }
 
     // PUT for
-    @PutMapping("/updatePowerPlant/{id}")
+    @PutMapping("/powerPlant/{id}")
     public ResponseEntity<PowerPlant> updatePowerPlant(@RequestBody PowerPlant newPowerPlant,
                                                        @PathVariable("id") ObjectId id) {
         Optional<PowerPlant> pp = powerPlantRepository.findById(id);
