@@ -61,7 +61,7 @@ public class PowerPlantController {
     }
 
     // PUT for
-    @PutMapping("/powerPlant/{id}")
+    @PutMapping("/powerPlants/{id}")
     public ResponseEntity<PowerPlant> updatePowerPlant(@RequestBody PowerPlant newPowerPlant,
                                                        @PathVariable("id") ObjectId id) {
         Optional<PowerPlant> pp = powerPlantRepository.findById(id);
