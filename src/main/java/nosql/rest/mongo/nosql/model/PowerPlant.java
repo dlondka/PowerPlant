@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @Document(collection = "powerPlant")
 public class PowerPlant {
+
     @Id
     private ObjectId _id;
     private String country;
