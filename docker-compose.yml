@@ -1,0 +1,135 @@
+version: "3.9"
+
+services:
+  ## Shard01 ports 30101 - 30103
+  shard01a:
+    image: mongo:latest
+    container_name: shard01-nodeA
+    command: mongod --port 27017 --shardsvr --replSet rs-shard-01 --dbpath /data/db
+    ports:
+      - 30101:27017
+    volumes:
+      - .:/catalog
+
+  shard01b:
+    image: mongo:latest
+    container_name: shard01-nodeB
+    command: mongod --port 27017 --shardsvr --replSet rs-shard-01 --dbpath /data/db
+    ports:
+      - 30102:27017
+    volumes:
+      - .:/catalog
+
+  shard01c:
+    image: mongo:latest
+    container_name: shard01-nodeC
+    command: mongod --port 27017 --shardsvr --replSet rs-shard-01 --dbpath /data/db
+    ports:
+      - 30103:27017
+    volumes:
+      - .:/catalog
+
+  ## Shard02 ports 30201 - 30203
+  shard02a:
+    image: mongo:latest
+    container_name: shard02-nodeA
+    command: mongod --port 27017 --shardsvr --replSet rs-shard-02 --dbpath /data/db
+    ports:
+      - 30201:27017
+    volumes:
+      - .:/catalog
+
+  shard02b:
+    image: mongo:latest
+    container_name: shard02-nodeB
+    command: mongod --port 27017 --shardsvr --replSet rs-shard-02 --dbpath /data/db
+    ports:
+      - 30202:27017
+    volumes:
+      - .:/catalog
+
+  shard02c:
+    image: mongo:latest
+    container_name: shard02-nodeC
+    command: mongod --port 27017 --shardsvr --replSet rs-shard-02 --dbpath /data/db
+    ports:
+      - 30203:27017
+    volumes:
+      - .:/catalog
+
+  ## Shard03 ports 30301 - 300303
+  shard03a:
+    image: mongo:latest
+    container_name: shard03-nodeA
+    command: mongod --port 27017 --shardsvr --replSet rs-shard-03 --dbpath /data/db
+    ports:
+      - 30301:27017
+    volumes:
+      - .:/catalog
+
+  shard03b:
+    image: mongo:latest
+    container_name: shard03-nodeB
+    command: mongod --port 27017 --shardsvr --replSet rs-shard-03 --dbpath /data/db
+    ports:
+      - 30302:27017
+    volumes:
+      - .:/catalog
+
+  shard03c:
+    image: mongo:latest
+    container_name: shard03-nodeC
+    command: mongod --port 27017 --shardsvr --replSet rs-shard-03 --dbpath /data/db
+    ports:
+      - 30303:27017
+    volumes:
+      - .:/catalog
+
+  ## Router port 40001 - 40002
+  router:
+    image: mongo:latest
+    container_name: router
+    command: mongos --port 27017 --configdb rs-config-server/configserver01:27017,configserver02:27017,configserver03:27017 --bind_ip_all
+    ports:
+      - 40001:27017
+    volumes:
+      - .:/catalog
+
+  router02:
+    image: mongo:latest
+    container_name: router-02
+    command: mongos --port 27017 --configdb rs-config-server/configserver01:27017,configserver02:27017,configserver03:27017 --bind_ip_all
+    ports:
+      - 40002:27017
+    volumes:
+      - .:/catalog
+
+
+
+  ## Config server ports 50001 - 50003
+  configserver01:
+    image: mongo:latest
+    container_name: mongo-conf-01
+    command: mongod --port 27017 --configsvr --replSet rs-config-server --dbpath /data/db
+    ports:
+      - 50001:27017
+    volumes:
+      - .:/catalog
+
+  configserver02:
+    image: mongo:latest
+    container_name: mongo-conf-02
+    command: mongod --port 27017 --configsvr --replSet rs-config-server --dbpath /data/db
+    ports:
+      - 50002:27017
+    volumes:
+      - .:/catalog
+
+  configserver03:
+    image: mongo:latest
+    container_name: mongo-conf-03
+    command: mongod --port 27017 --configsvr --replSet rs-config-server --dbpath /data/db
+    ports:
+      - 50003:27017
+    volumes:
+      - .:/catalog

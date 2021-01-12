@@ -1,0 +1,72 @@
+mongo mongodb://localhost:
+
+CONFIG
+
+rs.initiate(
+  {
+    _id: "rs-config-server",
+    configsvr: true,
+    members: [
+      { _id : 0, host : "configserver01" },
+      { _id : 1, host : "configserver02" },
+      { _id : 2, host : "configserver03" }
+    ]
+  }
+)
+
+
+SHARD 01
+
+rs.initiate(
+  {
+    _id: "rs-shard-01",
+    members: [
+      { _id : 0, host : "shard01a" },
+      { _id : 1, host : "shard01b" },
+      { _id : 2, host : "shard01c" }
+    ]
+  }
+)
+
+
+SHARD 02
+
+rs.initiate(
+  {
+    _id: "rs-shard-02",
+    members: [
+      { _id : 0, host : "shard02a" },
+      { _id : 1, host : "shard02b" },
+      { _id : 2, host : "shard02c" }
+    ]
+  }
+)
+
+
+SHARD 03
+
+rs.initiate(
+  {
+    _id: "rs-shard-03",
+    members: [
+      { _id : 0, host : "shard03a" },
+      { _id : 1, host : "shard03b" },
+      { _id : 2, host : "shard03c" }
+    ]
+  }
+)
+
+ADD SHARD ON MONGOS
+sh.addShard("rs-shard-01/shard01a,shard01b,shard01c")
+
+
+sh.addShard("rs-shard-02/shard02a,shard02b,shard02c")
+
+
+sh.addShard("rs-shard-03/shard03a,shard03b,shard03c")
+
+
+
+
+
+mongoimport --db PowerPlantDB --collection powerPlant --type csv --headerline --file catalog/global_power_plant_database.csv
